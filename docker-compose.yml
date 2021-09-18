@@ -1,0 +1,46 @@
+#docker run -d -p 20003:27017 --name mongo3 --network mongo_net mongo:4.4.9-rc0 
+#mongod --replSet rs_mongo
+
+#version: "3.3"
+services:
+  mongo_1:
+    image: ivishalgandhi/mongo-custom:latest
+    hostname: mongo_1
+    container_name: mongo_1
+    volumes:
+      - /Users/vishalgandhi/learning/docker/mongo_replset/mongo_1/mongod.conf:/etc/mongod.conf
+      - /Users/vishalgandhi/learning/docker/mongo_replset/mongo_1/initdb.d/:/docker-entrypoint-initdb.d/
+      - /Users/vishalgandhi/learning/docker/mongo_replset/mongo_1/data/db/:/data/db/
+      - /Users/vishalgandhi/learning/docker/mongo_replset/mongo_1/log/:/var/log/mongodb/
+    ports:
+      - 20003:27017
+    command: ["-f", "/etc/mongod.conf","--replSet", "rs_mongo"]
+    network_mode: mongo_net
+
+  mongo_2:
+    image: ivishalgandhi/mongo-custom:latest
+    hostname: mongo_2
+    container_name: mongo_2
+    volumes:
+      - /Users/vishalgandhi/learning/docker/mongo_replset/mongo_2/mongod.conf:/etc/mongod.conf
+      - /Users/vishalgandhi/learning/docker/mongo_replset/mongo_2/initdb.d/:/docker-entrypoint-initdb.d/
+      - /Users/vishalgandhi/learning/docker/mongo_replset/mongo_2/data/db/:/data/db/
+      - /Users/vishalgandhi/learning/docker/mongo_replset/mongo_2/log/:/var/log/mongodb/
+    ports:
+      - 20004:27017
+    command: ["-f", "/etc/mongod.conf","--replSet", "rs_mongo"]
+    network_mode: mongo_net
+
+  mongo_3:
+    image: ivishalgandhi/mongo-custom:latest
+    hostname: mongo_3
+    container_name: mongo_3
+    volumes:
+      - /Users/vishalgandhi/learning/docker/mongo_replset/mongo_3/mongod.conf:/etc/mongod.conf
+      - /Users/vishalgandhi/learning/docker/mongo_replset/mongo_3/initdb.d/:/docker-entrypoint-initdb.d/
+      - /Users/vishalgandhi/learning/docker/mongo_replset/mongo_3/data/db/:/data/db/
+      - /Users/vishalgandhi/learning/docker/mongo_replset/mongo_3/log/:/var/log/mongodb/
+    ports:
+      - 20005:27017
+    command: ["-f", "/etc/mongod.conf","--replSet", "rs_mongo"]
+    network_mode: mongo_net
