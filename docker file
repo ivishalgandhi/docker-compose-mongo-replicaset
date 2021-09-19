@@ -1,0 +1,14 @@
+FROM mongo:latest
+
+RUN apt-get update && \ 
+apt-get install -y iputils-ping systemctl openssh-server net-tools systemctl 
+ 
+ # Expose ports.
+#   - 27017: process
+#   - 28017: http
+EXPOSE 27017
+
+# Define default command.
+CMD ["mongod"]
+
+
